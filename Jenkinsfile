@@ -4,24 +4,24 @@ pipeline{
     stages{
         stage("Restore Dependencies"){
             steps{
-                sh dotnet restore
+                sh 'dotnet restore'
             }
-                 post{
+            post{
                 always{
-                    echo "========Working========"
+                        echo "========Working========"
                 }
                 success{
-                    echo "========Operation successfully finished========"
+                        echo "========Operation successfully finished========"
                 }
                 failure{
-                    echo "========Operation failed========"
+                        echo "========Operation failed========"
                 }
             }
         }
 
         stage("Build Application"){
             steps{
-                sh dotnet build --no restore
+                sh 'dotnet build --no restore'
             }
             post{
                 always{
@@ -38,7 +38,7 @@ pipeline{
 
         stage("Run Test"){
             steps{
-                sh dotnet test --no build
+                sh 'dotnet test --no build'
             }
             post{
                 always{
