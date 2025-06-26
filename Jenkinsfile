@@ -21,7 +21,7 @@ pipeline{
 
         stage("Build Application"){
             steps{
-                sh 'dotnet build --no restore'
+                sh 'dotnet build --no-restore'
             }
             post{
                 always{
@@ -38,7 +38,7 @@ pipeline{
 
         stage("Run Test"){
             steps{
-                sh 'dotnet test --no build'
+                sh 'dotnet test --no-build'
             }
             post{
                 always{
