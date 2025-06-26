@@ -3,15 +3,15 @@ pipeline{
 
     stages{
 
-        // stage("Build and Test for Valid Branches"){
+        stage("Build and Test for Valid Branches"){
 
-        //     when{
-        //         anyOf {
-        //             branch  'main'
-        //             branch pattern: "feature/.*", comparator: "REGEXP"
-        //         }
-        //     }
-        //     stages{
+            when{
+                anyOf {
+                    branch  'main'
+                    branch pattern: "feature/.*", comparator: "REGEXP"
+                }
+            }
+            stages{
 
                 stage("Checkout"){
 
@@ -70,8 +70,8 @@ pipeline{
                         }
                     }
                 }
-        //     }
-        // }
+            }
+        }
 
 
        
