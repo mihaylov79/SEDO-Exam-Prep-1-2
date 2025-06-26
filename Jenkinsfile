@@ -2,53 +2,75 @@ pipeline{
     agent any
 
     stages{
-        stage("Restore Dependencies"){
-            steps{
-                sh 'dotnet restore'
-            }
-            post{
-                always{
-                        echo "========Working========"
-                }
-                success{
-                        echo "========Operation successfully finished========"
-                }
-                failure{
-                        echo "========Operation failed========"
-                }
-            }
-        }
 
-        stage("Build Application"){
-            steps{
-                sh 'dotnet build --no-restore'
-            }
-            post{
-                always{
-                    echo "========Working========"
-                }
-                success{
-                    echo "========Operation successfully finished========"
-                }
-                failure{
-                    echo "========Operation failed========"
-                }
-            }
-        }
+        stage("Build and Test for Valid Branches"){
 
-        stage("Run Test"){
-            steps{
-                sh 'dotnet test --no-build'
+            when{
+                anyOf {
+                    branch  'main'
+                    expression { 
+                        return env.BRANCH_NAME ==~ /feature\/.*/ 
+                    }
+                }
             }
-            post{
-                always{
-                    echo "========Working========"
+            stages{
+
+                stage("Checkout"){
+
+                    steps{
+                        checkout scm
+                    }
                 }
-                success{
-                    echo "========Operation successfully finished========"
+            
+                stage("Restore Dependencies"){
+                    steps{
+                        sh 'dotnet restore'
+                    }
+                    post{
+                        always{
+                                echo "========Working========"
+                        }
+                        success{
+                                echo "========Operation successfully finished========"
+                        }
+                        failure{
+                                echo "========Operation failed========"
+                        }
+                    }
                 }
-                failure{
-                    echo "========Operation failed========"
+
+                stage("Build Application"){
+                    steps{
+                        sh 'dotnet build --no-restore'
+                    }
+                    post{
+                        always{
+                            echo "========Working========"
+                        }
+                        success{
+                            echo "========Operation successfully finished========"
+                        }
+                        failure{
+                            echo "========Operation failed========"
+                        }
+                    }
+                }
+
+                stage("Run Test"){
+                    steps{
+                        sh 'dotnet test --no-build'
+                    }
+                    post{
+                        always{
+                            echo "========Working========"
+                        }
+                        success{
+                            echo "========Operation successfully finished========"
+                        }
+                        failure{
+                            echo "========Operation failed========"
+                        }
+                    }
                 }
             }
         }
