@@ -8,9 +8,7 @@ pipeline{
             when{
                 anyOf {
                     branch  'main'
-                    expression { 
-                        return env.BRANCH_NAME ==~ /feature\/.*/ 
-                    }
+                    branch pattern: "feature/.*", comparator: "REGEXP"
                 }
             }
             stages{
