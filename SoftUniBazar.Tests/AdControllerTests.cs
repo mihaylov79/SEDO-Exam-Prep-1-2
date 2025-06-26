@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using SoftUniBazar.Data.Models;
-//Neshto si tam!
+
 namespace SoftUniBazar.Tests
 {
     [TestFixture]
